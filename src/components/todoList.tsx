@@ -53,7 +53,7 @@ export default function TodoList() {
     loadTodos();
   }, []);
 
-    const handleCreate = async (newTodo: CreateTodoType) => {
+  const handleCreate = async (newTodo: CreateTodoType) => {
     try {
       const jsonData = JSON.stringify({ ...newTodo })
       const response = await fetch(`/api/todos`, {
@@ -110,7 +110,6 @@ export default function TodoList() {
     setWarn(false)
     if (e.key === 'Enter') {
       if (!inputValue.trim()) {
-        console.log("inputValue", !inputValue.trim())
         setWarn(true)
         setMessage("Todo cannot be empty")
         return;
@@ -119,7 +118,7 @@ export default function TodoList() {
       // check duplicate value
       const duplicate = todos.findIndex(
         (item) => (
-          item.todo.trim() === inputValue.trim()
+          item.todo.trim() === inputValue.trim() && editTodo.id !== item.id
         ))
 
       const newTodo: CreateTodoType = {
