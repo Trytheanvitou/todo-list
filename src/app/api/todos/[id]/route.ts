@@ -4,9 +4,9 @@ import { TodoType } from "@/src/types/todoType";
 
 const service = new SupabaseCrudService<TodoType>('todo')
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const {id} = await params;
+    const { id } = await params;
     const payload: Partial<TodoType> = await req.json();
 
     const data = await service.update(id, payload);
@@ -22,10 +22,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const {id} = await params;
+    const { id } = await params;
 
     await service.delete(id);
 
